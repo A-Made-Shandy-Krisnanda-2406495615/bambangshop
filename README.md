@@ -77,6 +77,11 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
+1. Pada kasus ini, apabila hanya terdapat satu jenis observer, penggunaan satu `Model` struct sebenarnya sudah cukup dan tidak wajib menggunakan interface atau trait. Namun, dalam konteks pola Observer, penggunaan trait tetap lebih baik karena memberikan fleksibilitas apabila di kemudian hari terdapat lebih dari satu jenis observer dengan perilaku yang berbeda. Dengan demikian, desain sistem menjadi lebih mudah dikembangkan dan tetap konsisten terhadap prinsip extensibility.
+
+2. Penggunaan `DashMap` lebih sesuai dibandingkan `Vec` karena kebutuhan utama pada kasus ini adalah menyimpan dan mencari subscriber secara efisien berdasarkan `product_type` dan `url`. Jika menggunakan `Vec`, proses pencarian dan penghapusan akan cenderung dilakukan secara linear. Sementara itu, `DashMap` memberikan akses berbasis key yang lebih efisien serta mendukung akses konkuren secara aman, sehingga lebih cocok untuk aplikasi web yang berpotensi menangani banyak request secara bersamaan.
+
+3. `DashMap` tetap diperlukan walaupun kita sudah menerapkan Singleton. Singleton hanya memastikan bahwa instance penyimpanan subscriber hanya ada satu dalam aplikasi, tetapi tidak otomatis menjadikan akses ke data tersebut aman pada lingkungan multithread. Karena aplikasi publisher dapat menerima beberapa request secara bersamaan, dibutuhkan struktur data yang thread-safe. Dalam hal ini, `DashMap` memenuhi kebutuhan tersebut tanpa mengharuskan kita mengelola `Mutex` atau `RwLock` secara manual.
 
 #### Reflection Publisher-2
 
