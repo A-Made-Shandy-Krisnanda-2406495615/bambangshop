@@ -84,5 +84,10 @@ This is the place for you to write reflections:
 3. `DashMap` tetap diperlukan walaupun kita sudah menerapkan Singleton. Singleton hanya memastikan bahwa instance penyimpanan subscriber hanya ada satu dalam aplikasi, tetapi tidak otomatis menjadikan akses ke data tersebut aman pada lingkungan multithread. Karena aplikasi publisher dapat menerima beberapa request secara bersamaan, dibutuhkan struktur data yang thread-safe. Dalam hal ini, `DashMap` memenuhi kebutuhan tersebut tanpa mengharuskan kita mengelola `Mutex` atau `RwLock` secara manual.
 
 #### Reflection Publisher-2
+1. Pemisahan antara `Service` dan `Repository` diperlukan agar masing-masing lapisan memiliki tanggung jawab yang jelas. `Repository` berfokus pada pengelolaan dan akses data, sedangkan `Service` berfokus pada logika bisnis aplikasi. Pemisahan ini membuat struktur kode lebih rapi, lebih mudah dipelihara, serta sejalan dengan prinsip Single Responsibility Principle (SRP) karena setiap komponen hanya menangani satu jenis tanggung jawab utama.
+
+2. Apabila seluruh logika hanya diletakkan di dalam `Model`, maka akan terjadi coupling yang tinggi karena representasi data, akses penyimpanan, dan aturan bisnis bercampur di satu tempat. Dalam kasus ini, interaksi antara `Product`, `Subscriber`, dan `Notification` akan menjadi lebih sulit dikelola karena perubahan pada satu bagian dapat berdampak langsung pada bagian lain. Dengan memisahkan `Model`, `Repository`, dan `Service`, struktur aplikasi menjadi lebih modular dan perubahan dapat dilakukan dengan risiko yang lebih kecil.
+
+3. Postman sangat membantu dalam proses pengembangan karena memudahkan pengujian endpoint HTTP secara langsung tanpa harus membuat antarmuka khusus terlebih dahulu. Selain mendukung berbagai method request, Postman juga mempermudah pengaturan parameter, request body, dan environment variables. Dalam konteks kerja tim, fitur collection dan automated testing pada Postman juga bermanfaat untuk menjaga konsistensi pengujian API selama proses pengembangan berlangsung.
 
 #### Reflection Publisher-3
